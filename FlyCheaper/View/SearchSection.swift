@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SearchSection: View {
+    
+    @State var from: String = ""
+    @State var whereTo: String = ""
+    
     var body: some View {
         HStack(spacing: 0) {
             ZStack {
@@ -29,10 +33,14 @@ struct SearchSection: View {
                     
                     VStack(spacing: 0) {
                         HStack {
-                            Text("Text")
-                                .font(Font.custom("SFProDisplay-Semibold", size: 16))
-                                .foregroundStyle(Color.white)
-                                .padding(EdgeInsets(top: 0, leading: 20, bottom: 8, trailing: 0))
+                            TextField(text: $from) {
+                                Text("Откуда - Москва")
+                                    .font(Font.custom("SFProDisplay-Semibold", size: 16))
+                                    .foregroundStyle(.white)
+                            }
+                            .accentColor(.white)
+                            .keyboardType(.alphabet)
+                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 8, trailing: 0))
                             Spacer()
                         }
                         RoundedRectangle(cornerRadius: 16)
@@ -40,10 +48,13 @@ struct SearchSection: View {
                             .foregroundStyle(Color("RectanglaLineColorHex"))
                             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 48))
                         HStack(spacing: 0) {
-                            Text("Text")
-                                .font(Font.custom("SFProDisplay-Semibold", size: 16))
-                                .foregroundStyle(Color("RectanglaLineColorHex"))
-                                .padding(EdgeInsets(top: 8, leading: 20, bottom: 0, trailing: 0))
+                            TextField(text: $whereTo) {
+                                Text("Куда - Турция")
+                                    .font(Font.custom("SFProDisplay-Semibold", size: 16))
+                                    .foregroundStyle(Color("RectanglaLineColorHex100"))
+                            }
+                            .accentColor(.white)
+                            .padding(EdgeInsets(top: 8, leading: 20, bottom: 0, trailing: 0))
                             Spacer()
                         }
                     }

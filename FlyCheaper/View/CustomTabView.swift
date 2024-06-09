@@ -19,7 +19,7 @@ struct CustomTabView: View {
                 ZStack {
                     switch selectedIndex {
                     case 0:
-                        ContentView()
+                        Home()
                     case 1:
                         Text("Отели")
                             .font(.largeTitle)
