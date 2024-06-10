@@ -14,11 +14,11 @@ struct Keyboard: View {
     
     var body: some View {
         VStack {
-                Image(systemName: "heart.fill")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .foregroundStyle(Color.red)
-            TextField("$100", text: $text)
+//                Image(systemName: "heart.fill")
+//                .resizable()
+//                .frame(width: 100, height: 100)
+//                .foregroundStyle(Color.red)
+            TextField("some text", text: $text)
                 .inputView {
                     CustomKeyboardView()
                 }
@@ -55,8 +55,8 @@ struct Keyboard: View {
                     text.removeLast()
                 }
             }
-            keyboardButtonView(.text("Пробел")) {
-                text.append(" ")
+            keyboardButtonView(.text("0")) {
+                text.append("0")
 
             }
             keyboardButtonView(.image("checkmark.circle.fill")) {
@@ -68,7 +68,7 @@ struct Keyboard: View {
         .padding(.vertical, 5)
         .background {
             Rectangle()
-                .fill(Color.green.gradient)
+                .fill(Color.black.gradient)
                 .ignoresSafeArea()
         }
     }

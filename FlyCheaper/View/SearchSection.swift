@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct SearchSection: View {
-    
+    @State private var text: String = ""
+    @FocusState private var showKeyboard: Bool
+    private var alphabet = ["й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю"]
     @State var from: String = ""
     @State var whereTo: String = ""
     
@@ -33,11 +35,15 @@ struct SearchSection: View {
                     
                     VStack(spacing: 0) {
                         HStack {
-                            TextField(text: $from) {
+                            TextField(text: $text) {
                                 Text("Откуда - Москва")
                                     .font(Font.custom("SFProDisplay-Semibold", size: 16))
                                     .foregroundStyle(.white)
                             }
+                            .inputView(content: {
+                                CustomKeyboardView()
+                            })
+                            .focused($showKeyboard)
                             .accentColor(.white)
                             .keyboardType(.alphabet)
                             .padding(EdgeInsets(top: 0, leading: 20, bottom: 8, trailing: 0))
@@ -53,6 +59,10 @@ struct SearchSection: View {
                                     .font(Font.custom("SFProDisplay-Semibold", size: 16))
                                     .foregroundStyle(Color("RectanglaLineColorHex100"))
                             }
+                            .inputView(content: {
+                                CustomKeyboardView()
+                            })
+                            .focused($showKeyboard)
                             .accentColor(.white)
                             .padding(EdgeInsets(top: 8, leading: 20, bottom: 0, trailing: 0))
                             Spacer()
@@ -64,8 +74,80 @@ struct SearchSection: View {
         }
         .padding(EdgeInsets(top: 38, leading: 0, bottom: 0, trailing: 0))
     }
+    // Custom keyboard
+    @ViewBuilder
+    func CustomKeyboardView() -> some View {
+        LazyVGrid(columns: Array(repeating: .init(.flexible(), spacing: 10), count: 11), spacing: 10) {
+            ForEach(alphabet, id: \.self) { index in
+                keyboardButtonView(.text("\(index)")) {
+                    print(index)
+                    text.append("\(index)")
+                        
+                }
+            }
+            
+            keyboardButtonView(.image("delete.backward")) {
+                if !text.isEmpty {
+                    text.removeLast()
+                }
+            }
+            keyboardButtonView(.text("0")) {
+                text.append("0")
+
+            }
+            keyboardButtonView(.image("checkmark.circle.fill")) {
+                showKeyboard = false
+            }
+            
+        }
+        .padding(.horizontal, 15)
+        .padding(.vertical, 5)
+        .background {
+            Rectangle()
+                .fill(Color.black.gradient)
+                .ignoresSafeArea()
+        }
+    }
+    @ViewBuilder
+    func keyboardButtonView(_ value: KeyboardValue, onTap: @escaping () -> ()) -> some View {
+        Button(action: onTap) {
+            ZStack {
+                switch value {
+                case .text(let string):
+                    if string == "ю" {
+                        
+                    }
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.gray)
+                            .frame(width: 28)
+                        Text(string)
+                            .font(.title)
+                            .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                    }
+                case .image(let image):
+                    Image(systemName: image)
+                        .font(image == "checkmark.circle.fill" ? .title : .title2)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(image == "checkmark.circle.fill" ? .red : .white)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 15)
+            .contentShape(Rectangle())
+        }
+    }
 }
+
+//enum KeyboardValue {
+//    case text(String)
+//    case image(String)
+//}
+
+//}
 
 #Preview {
     SearchSection()
 }
+
