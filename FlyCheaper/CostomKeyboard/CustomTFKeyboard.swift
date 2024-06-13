@@ -15,7 +15,7 @@ extension TextField {
                 SetTFKeyboard(keyboardContent: content())
             }
     }
-
+    
 }
 
 fileprivate struct SetTFKeyboard<Content: View>: UIViewRepresentable {
@@ -45,16 +45,6 @@ fileprivate struct SetTFKeyboard<Content: View>: UIViewRepresentable {
     }
 }
 
-struct CustomTFKeyboard: View {
-    var body: some View {
-        Text("Hello, World!")
-    }
-}
-
-#Preview {
-    CustomTFKeyboard()
-}
-
 fileprivate extension UIView {
     var allSubviews: [UIView] {
         return subviews.flatMap { [$0] + $0.subviews }
@@ -67,4 +57,13 @@ fileprivate extension UIView {
         }
         return nil
     }
+}
+
+struct CustomTFKeyboard: View {
+    var body: some View {
+        Text("Hello, World!")
+    }
+}
+#Preview {
+    CustomTFKeyboard()
 }
